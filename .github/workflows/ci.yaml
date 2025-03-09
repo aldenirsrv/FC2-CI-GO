@@ -6,13 +6,23 @@ on:
 jobs:
   check-application:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go: ['1.14', '1.15'] 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
-          go-version: ${{matrix.go}}
+          go-version: 1.15
       - run: go test
       - run: go run math.go
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-actions@v1
+      
+      - name: Set up DockerBuildex
+        uses: docker/setup-buildx-actions@v1
+     
+      - name: Build and push
+        id: dicker_build
+        user: docker/build-push-actions@v2
+        with:
+          push: false
+          tags: aldenir/fc2.0-ci-go:latest
