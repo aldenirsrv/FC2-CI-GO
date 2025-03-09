@@ -22,7 +22,7 @@ jobs:
      
       - name: Build and push
         id: dicker_build
-        user: docker/build-push-actions@v2
+        uses: docker/build-push-actions@v2
         with:
           push: false
           tags: aldenir/fc2.0-ci-go:latest
